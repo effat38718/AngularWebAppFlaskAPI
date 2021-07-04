@@ -82,5 +82,29 @@ def dataPost():
     return jsonify({"SUCCESS": "Data inserted"}, 200)
 
 
+@app.route("/api/updatedata", methods=["PUT"])
+def dataUpdate():
+    jsonData = request.get_json()
+    print(jsonData)
+    SQL = (
+        "update [User] set username = '"
+        + jsonData["username"]
+        + "', email ='"
+        + jsonData["email"]
+        + "', gender ='"
+        + jsonData["gender"]
+        + "', dob = '"
+        + jsonData["dob"]
+        + "' where username = '"
+        + jsonData["username"]
+        + "';"
+    )
+    print(SQL)
+    cursor = cnxn.cursor()
+    cursor.execute(SQL)
+    cnxn.commit()
+    return jsonify({"SUCCESS": "Data updated"}, 200)
+
+
 if __name__ == "__main__":
     app.run(debug=True)
